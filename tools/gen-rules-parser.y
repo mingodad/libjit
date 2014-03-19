@@ -82,6 +82,8 @@ yyerror(char *msg)
  * Instruction type for the "inst" variable.
  */
 static char *gensel_inst_type = "unsigned char *";
+static char *gensel_inst_type_member = 0;
+static char *gensel_inst_type_cast = 0;
 static int gensel_new_inst_type = 0;
 
 /*
@@ -1468,7 +1470,9 @@ static void gensel_output_clauses(gensel_clause_t clauses, gensel_option_t optio
 			printf(");\n");
 		}
 
-		printf("\t\tinst = (%s)(gen->ptr);\n", gensel_inst_type);
+		printf("\t\tinst%s = (%s)(gen->ptr);\n", 
+			gensel_inst_type_member ? gensel_inst_type_member : "",
+			gensel_inst_type_cast ? gensel_inst_type_cast : gensel_inst_type);
 
 		regs = 0;
 		imms = 0;
@@ -1686,6 +1690,8 @@ static void gensel_output_supported(void)
 %token K_X87_ARITH		"`x87_arith'"
 %token K_X87_ARITH_REVERSIBLE	"`x87_arith_reversible'"
 %token K_INST_TYPE		"`%inst_type'"
+%token K_INST_TYPE_MEMBER		"`%inst_type_member'"
+%token K_INST_TYPE_CAST		"`%inst_type_cast'"
 %token K_REG_CLASS		"`%reg_class'"
 %token K_LREG_CLASS		"`%lreg_class'"
 
@@ -1750,6 +1756,12 @@ Rule
 	| K_INST_TYPE IDENTIFIER	{
 			gensel_inst_type = $2;
 			gensel_new_inst_type = 1;
+		}
+	| K_INST_TYPE_MEMBER LITERAL	{
+			gensel_inst_type_member = $2;
+		}
+	| K_INST_TYPE_CAST LITERAL	{
+			gensel_inst_type_cast = $2;
 		}
 	| K_REG_CLASS IDENTIFIER IDENTIFIER {
 			gensel_create_regclass($2, $3, 0);

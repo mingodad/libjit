@@ -989,6 +989,7 @@ void detect_float_return(void)
 		{ \
 			struct_return_in_reg[(n) - 1] = 1; \
 		} \
+		(void)apply_return;\
 	}
 #define	call_struct_test(n)	run_detect_struct_##n()
 declare_struct_test(1);

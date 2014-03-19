@@ -114,6 +114,8 @@ WHITE			[ \t\v\r\f]
 "x87_arith"		{ RETURNTOK(K_X87_ARITH); }
 "x87_arith_reversible"	{ RETURNTOK(K_X87_ARITH_REVERSIBLE); }
 "%inst_type"		{ RETURNTOK(K_INST_TYPE); }
+"%inst_type_member"		{ RETURNTOK(K_INST_TYPE_MEMBER); }
+"%inst_type_cast"		{ RETURNTOK(K_INST_TYPE_CAST); }
 "%regclass"		{ RETURNTOK(K_REG_CLASS); }
 "%lregclass"		{ RETURNTOK(K_LREG_CLASS); }
 

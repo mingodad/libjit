@@ -26,6 +26,7 @@
 
 #include <assert.h>
 #include <jit-rules-arm.h>
+#define	jit_assert(x)	if (!(x)) break
 
 #ifdef __cplusplus
 extern "C" {

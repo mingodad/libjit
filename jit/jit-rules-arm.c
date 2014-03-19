@@ -130,7 +130,7 @@ static _jit_regclass_t *arm_lreg;
  */
 #define	jit_gen_load_inst_ptr(gen,inst)	\
 	do { \
-		arm_inst_buf_init((inst), (gen)->ptr, (gen)->limit); \
+		arm_inst_buf_init((inst), (gen)->ptr, (gen)->code_end); \
 	} while (0)
 
 /*
@@ -361,7 +361,7 @@ static void add_constant_fixup
 {
 	arm_inst_word *prev;
 	int value;
-	if(((unsigned char *)fixup) >= gen->limit)
+	if(((unsigned char *)fixup) >= gen->code_end)
 	{
 		/* The instruction buffer is full, so don't record this fixup */
 		return;
