@@ -38,6 +38,9 @@
 #ifdef HAVE_FCNTL_H
 	#include <fcntl.h>
 #endif
+#ifdef __arm__
+#include "cpu-arm-v8.c"
+#endif
 #else /* JIT_WIN32_PLATFORM */
 	#include <windows.h>
 	#include <io.h>
@@ -176,6 +179,9 @@ _jit_flush_exec(void *ptr, unsigned int size)
 
 #elif (defined(__arm__) || defined(__arm)) && defined(linux)
 
+	FlushICache(ptr, size);
+
+#if 0
 	/* ARM Linux has a "cacheflush" system call */
 	/* R0 = start of range, R1 = end of range, R3 = flags */
 	/* flags = 0 indicates data cache, flags = 1 indicates both caches */
@@ -188,7 +194,7 @@ _jit_flush_exec(void *ptr, unsigned int size)
 					    "r" (((int)ptr) + (int)size),
 						"r" (0)
 					  : "r0", "r1", "r3" );
-
+#endif
 #elif (defined(__ia64) || defined(__ia64__)) && defined(linux)
 #define CLSIZE 32
 	register unsigned char *p   = ROUND_BEG_PTR (ptr);
