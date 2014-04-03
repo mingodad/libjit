@@ -202,7 +202,7 @@ jit_vmem_release(void *addr, jit_uint size)
 #endif
 }
 
-int
+void *
 jit_vmem_commit(void *addr, jit_uint size, jit_prot_t prot)
 {
 #if defined(JIT_VMEM_WIN32)

@@ -46,7 +46,7 @@ void *jit_vmem_reserve(jit_uint size);
 void *jit_vmem_reserve_committed(jit_uint size, jit_prot_t prot);
 int jit_vmem_release(void *addr, jit_uint size);
 
-int jit_vmem_commit(void *addr, jit_uint size, jit_prot_t prot);
+void *jit_vmem_commit(void *addr, jit_uint size, jit_prot_t prot);
 int jit_vmem_decommit(void *addr, jit_uint size);
 
 int jit_vmem_protect(void *addr, jit_uint size, jit_prot_t prot);

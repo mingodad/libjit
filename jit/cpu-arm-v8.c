@@ -28,6 +28,7 @@
 // CPU specific code for arm independent of OS goes here.
 #ifdef __arm__
 #include <sys/syscall.h>  // for cache flushing.
+#include <stdint.h>
 #endif
 
 /*
@@ -72,12 +73,12 @@ void /*CPU::*/FlushICache(void* start, size_t size) {
   // however, syscall(int, ...) is not supported on all platforms, especially
   // not when using EABI, so we call the __ARM_NR_cacheflush syscall directly.
 
-  register intptr_t beg asm("a1") = (intptr_t)start;
-  register intptr_t end asm("a2") = ((intptr_t)start) + size;
-  register intptr_t flg asm("a3") = 0;
+  register uintptr_t beg asm("a1") = (uintptr_t)start;
+  register uintptr_t end asm("a2") = ((uintptr_t)start) + size;
+  register uintptr_t flg asm("a3") = 0;
   #if defined (__arm__) && !defined(__thumb__)
     // __arm__ may be defined in thumb mode.
-    register intptr_t scno asm("r7") = __ARM_NR_cacheflush;
+    register uintptr_t scno asm("r7") = __ARM_NR_cacheflush;
     asm volatile(
         "svc 0x0"
         : "=r" (beg)
